@@ -37,7 +37,7 @@ func (h *TransactionHandler) CreateTransaction(ctx *gin.Context) {
 		return
 	}
 
-	// Check PIN only for transfer
+	// Check PIN only for transfer type
 	if req.Type == "transfer" {
 		// Ambil PIN user dari DB
 		storedPIN, err := h.repoAuth.VerifyUserPIN(ctx.Request.Context(), uid)
