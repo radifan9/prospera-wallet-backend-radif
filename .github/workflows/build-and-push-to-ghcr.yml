@@ -1,5 +1,9 @@
 name: Building Image and Pushing to GHCR
-on: [push]
+
+on:
+  push:
+  workflow_dispatch:
+
 jobs:
   Build-And-Publish:
     runs-on: ubuntu-latest
