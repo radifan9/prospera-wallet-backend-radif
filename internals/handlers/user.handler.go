@@ -119,16 +119,16 @@ func (uh *UserHandler) GetAllUsers(ctx *gin.Context) {
 		return
 	}
 
-	var cachedData []models.User
-	var redisKey = fmt.Sprintf("Prospera-AllUser-%d", uid)
-	if err := utils.CacheHit(ctx.Request.Context(), uh.rdb, redisKey, &cachedData); err == nil {
-		ctx.JSON(http.StatusOK, models.Response[[]models.User]{
-			Success: true,
-			Message: "Success Get All Users (from cache)",
-			Data:    cachedData,
-		})
-		return
-	}
+	// var cachedData []models.User
+	// var redisKey = fmt.Sprintf("Prospera-AllUser-%d", uid)
+	// if err := utils.CacheHit(ctx.Request.Context(), uh.rdb, redisKey, &cachedData); err == nil {
+	// 	ctx.JSON(http.StatusOK, models.Response[[]models.User]{
+	// 		Success: true,
+	// 		Message: "Success Get All Users (from cache)",
+	// 		Data:    cachedData,
+	// 	})
+	// 	return
+	// }
 
 	users, err := uh.ur.GetAllUser(ctx.Request.Context(), uid)
 	if err != nil {
@@ -136,9 +136,9 @@ func (uh *UserHandler) GetAllUsers(ctx *gin.Context) {
 		return
 	}
 
-	if err := utils.RenewCache(ctx.Request.Context(), uh.rdb, redisKey, users, 10); err != nil {
-		log.Println("Failed to set redis cache:", err)
-	}
+	// if err := utils.RenewCache(ctx.Request.Context(), uh.rdb, redisKey, users, 10); err != nil {
+	// 	log.Println("Failed to set redis cache:", err)
+	// }
 
 	ctx.JSON(http.StatusOK, models.Response[[]models.User]{
 		Success: true,
